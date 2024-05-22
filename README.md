@@ -6,3 +6,5 @@ A script to analyse git repositories locally.
 2. Go to the location where you saved this tool `cd /path/to/tool/GitAnalyser`
 3. Run the tool using `python script.py`
 4. The results will be stored in `/path/to/tool/GitAnalyser/Results`
+
+- Optionally use `python script.py --extended` to get a more detailed line-per-line view.
