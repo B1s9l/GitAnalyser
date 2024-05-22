@@ -26,6 +26,7 @@ os.chdir(repo_dir)
 # Parse command-line arguments
 parser = argparse.ArgumentParser(description='Generate git statistics.')
 parser.add_argument('--extended', action='store_true', help='Include content of changed lines')
+parser.add_argument('--files', action='store_true', help='Include files changed without line content')
 args = parser.parse_args()
 
 # Command to get the git log with author and file changes
@@ -133,17 +134,18 @@ with open(output_file, 'w') as f:
         f.write(f'  Total lines: {user_totals}. Thats {percentage}%\n')
         f.write("\n")
         
-        f.write("Files changed:\n")
-        for filename, lines in files.items():
-            f.write(f"  {filename}: {lines} lines added\n")
-            if args.extended and filename in file_changes:
-                f.write(f"    + Added lines:\n")
-                for added_line in file_changes[filename]['added']:
-                    f.write(f"      + {added_line}\n")
-                f.write(f"    - Deleted lines:\n")
-                for deleted_line in file_changes[filename]['deleted']:
-                    f.write(f"      - {deleted_line}\n")
-        f.write("\n")
+        if args.files or args.extended:
+            f.write("Files changed:\n")
+            for filename, lines in files.items():
+                f.write(f"  {filename}: {lines} lines added\n")
+                if args.extended and filename in file_changes:
+                    f.write(f"    + Added lines:\n")
+                    for added_line in file_changes[filename]['added']:
+                        f.write(f"      + {added_line}\n")
+                    f.write(f"    - Deleted lines:\n")
+                    for deleted_line in file_changes[filename]['deleted']:
+                        f.write(f"      - {deleted_line}\n")
+            f.write("\n")
         f.write("################################################################################################################################\n")
         f.write("################################################################################################################################\n")
         f.write("################################################################################################################################\n\n")

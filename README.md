@@ -7,4 +7,6 @@ A script to analyse git repositories locally.
 3. Run the tool using `python script.py`
 4. The results will be stored in `/path/to/tool/GitAnalyser/Results`
 
-- Optionally use `python script.py --extended` to get a more detailed line-per-line view.
+- Use `python script.py --files` to see the overview of all files each user has edited.
+- Use `python script.py --extended` to see the overview of all files each user has edited and a breakdown of the most recent change line-by-line.
+(Using the `--extended` flag might cause longer waiting times depending on the size of the repository)
