@@ -50,8 +50,12 @@ def categorize_by_file_type(file_stats):
 # Get the directory where the script is located
 script_dir = os.path.dirname(os.path.abspath(__file__))
 
+# Create the "Results" directory if it doesn't exist
+results_dir = os.path.join(script_dir, "Results")
+os.makedirs(results_dir, exist_ok=True)
+
 # Construct the output file path
-output_file = os.path.join(script_dir, f"analysis_{repo_name}.txt")
+output_file = os.path.join(results_dir, f"analysis_{repo_name}.txt")
 
 # Collect overall file type statistics
 overall_file_stats = defaultdict(int)
