@@ -3,8 +3,19 @@ import subprocess
 from collections import defaultdict
 import argparse
 
-# Directory of the repository
-repo_dir = "/local/path/to/your/repository"
+# Read the repository path from the config file
+config_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "config.txt")
+repo_dir = None
+
+with open(config_file_path, 'r') as config_file:
+    for line in config_file:
+        line = line.strip()
+        if line and not line.startswith('#'):
+            repo_dir = line
+            break
+
+if not repo_dir:
+    raise ValueError("Repository path not found in config.txt")
 
 # Extract the repository name from the directory path
 repo_name = os.path.basename(repo_dir)

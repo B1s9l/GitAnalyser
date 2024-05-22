@@ -1,0 +1,5 @@
+### Config.txt
+# Add the local path to your git repository here
+# Lines starting with ´#´ will be ignored
+
+/local/path/to/your/repository
