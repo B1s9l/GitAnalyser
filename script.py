@@ -103,24 +103,26 @@ sorted_overall_file_stats = dict(sorted(overall_file_stats.items()))
 
 file_types = {}
 all_totals = 0
+breakline = "#############################################\n"
 # Write results to the output file
 with open(output_file, 'w') as f:
-    f.write("################################################################################################################################\n")
+    f.write(breakline)
     f.write("Overall lines added by file type:\n")
-    f.write("################################################################################################################################\n")
+    f.write(breakline)
     for file_type, total_lines in sorted_overall_file_stats.items():
         f.write(f'{file_type}: {total_lines} lines added\n')
         file_types[file_type] = total_lines
         all_totals += total_lines
     f.write("\n")
     f.write(f'Total lines: {all_totals}\n')
-    f.write("################################################################################################################################\n\n\n")
+    f.write(breakline)
+    f.write("\n\n")
 
     for user, files in user_file_stats.items():
         user_totals = 0 
-        f.write("################################################################################################################################\n")
+        f.write(breakline)
         f.write(f"{user}\n")
-        f.write("################################################################################################################################\n")
+        f.write(breakline)
         f.write("Lines added by file type:\n")
         categorized_stats = categorize_by_file_type(files)
         for file_type, total_lines in categorized_stats.items():
@@ -130,9 +132,9 @@ with open(output_file, 'w') as f:
         f.write("\n")
         percentage = round((100/all_totals)*user_totals, 2)
         f.write(f'  Total lines: {user_totals}. Thats {percentage}%\n')
-        f.write("################################################################################################################################\n\n\n")
         
         if args.files or args.extended:
+            f.write("\n")
             f.write("Files changed:\n")
             for filename, lines in files.items():
                 f.write(f"  {filename}: {lines} lines added\n")
@@ -143,6 +145,7 @@ with open(output_file, 'w') as f:
                     f.write(f"    - Deleted lines:\n")
                     for deleted_line in file_changes[filename]['deleted']:
                         f.write(f"      - {deleted_line}\n")
-            f.write("\n")
+        f.write(breakline)
+        f.write("\n\n")    
 
 print(f"Results written to {output_file}")
