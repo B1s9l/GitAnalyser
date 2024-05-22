@@ -101,7 +101,7 @@ for files in user_file_stats.values():
 sorted_overall_file_stats = dict(sorted(overall_file_stats.items()))
 
 file_types = {}
-
+all_totals = 0
 # Write results to the output file
 with open(output_file, 'w') as f:
     f.write("################################################################################################################################\n")
@@ -110,12 +110,16 @@ with open(output_file, 'w') as f:
     for file_type, total_lines in sorted_overall_file_stats.items():
         f.write(f'{file_type}: {total_lines} lines added\n')
         file_types[file_type] = total_lines
+        all_totals += total_lines
+    f.write("\n")
+    f.write(f'Total lines: {all_totals}\n')
     f.write("\n")
     f.write("################################################################################################################################\n")
     f.write("################################################################################################################################\n")
     f.write("################################################################################################################################\n\n")
     f.write("\n")
 
+    user_totals = 0
     for user, files in user_file_stats.items():
         f.write(f"########################### {user} ###########################\n")
         f.write("Lines added by file type:\n")
@@ -123,6 +127,10 @@ with open(output_file, 'w') as f:
         for file_type, total_lines in categorized_stats.items():
             percentage = round((100 / file_types[file_type]) * total_lines, 2)
             f.write(f"  {file_type}: {total_lines} lines added. Thats {percentage}%\n")
+            user_totals += total_lines
+        f.write("\n")
+        percentage = round((100/all_totals)*user_totals)
+        f.write(f'  Total lines: {user_totals}. Thats {percentage}%\n')
         f.write("\n")
         
         f.write("Files changed:\n")
